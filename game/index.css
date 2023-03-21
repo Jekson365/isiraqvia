@@ -1,0 +1,30 @@
+.each-box {
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  border-radius: 5px;
+  transition: 0.3s;
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+  box-shadow: 0 0 20px 0.1px rgba(0, 0, 0, 0.325);
+}
+.each-box:hover {
+  transform: scale(1.1);
+}
+.container {
+  width: 500px;
+  position: relative;
+  height: 500px;
+  margin: 0 auto;
+  border: 2px solid black;
+}
+
+.choosen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid black;
+  width: 500px;
+  height: 70px;
+  margin: 20px auto;
+}
