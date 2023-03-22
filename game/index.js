@@ -4,15 +4,13 @@ function getRandomArbitrary(min, max) {
 var container = document.querySelector(".container");
 var result = document.querySelector(".result")
 
-const arr = [
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-]
+
+function counter(arr,element) {
+    return arr.filter((each)=> each == element).length
+}
+
+
+var choosedItems = []
 
 class Peace {
     constructor(xCor, yCor, color) {
@@ -42,49 +40,52 @@ class Peace {
 
         this.eachPeace.addEventListener("click", (e) => {
             var currentItem = e.currentTarget
-            // var colors = ["#7149C6", "#FC2947", "#FE6244", "#245953", "#408E91", "#EA5455", "#002B5B"]
+            var colors = ["#caf0f8", "#ade8f4", "#90e0ef", "#48cae4", "#00b4d8", "#0077b6", "#023e8a","#03045e"]
             if (result.querySelectorAll(".item").length <= 5) {
                 currentItem.style.position = "static"
                 currentItem.classList.add("choosed")
                 result.append(currentItem)
-            }
-            var choosedElements = Array.from(document.querySelectorAll(".choosed"))
 
-            switch (currentItem.classList[1]) {
-                case "#7149C6":
-                    arr[0].push("#7149C6");
-                    break
-                case "#FC2947":
-                    arr[1].push("#FC2947");
-                    break
-                case "#FE6244":
-                    arr[2].push("#FE6244");
-                    break
-                case "#245953":
-                    arr[3].push("#245953");
-                    break
-                case "#408E91":
-                    arr[4].push("#408E91");
-                    break
-                case "#EA5455":
-                    arr[5].push("#EA5455");
-                    break
-                case "#002B5B":
-                    arr[6].push("#002B5B");
-                    break;
             }
+            if (document.querySelectorAll(".choosed").length >= 6) {
+                document.querySelector(".lose-banner").classList.add("cazdas")
+            }             
 
-            arr.forEach((ee)=> {
-                if (ee.length >= 2) {
-                    ee = []
+
+            choosedItems.push(currentItem.classList[1])
+
+            colors.map((each)=> {
+
+                if (counter(choosedItems,each) >= 2) {
+
+                    choosedItems = choosedItems.filter((foo)=>foo != each)
+                    
+                    var y = document.querySelectorAll(".choosed")
+                    y = Array.from(y)
+
+                    y.map((_color)=> {
+                        if (each == _color.classList[1]) {
+                            _color.remove()
+                        } 
+                    })
+
                 }
+                
+                 
             })
-
         })
     }
 }
 
-window.addEventListener("load", () => {
+document.getElementById("again").addEventListener("click",()=> {
+    document.querySelector(".lose-banner").classList.remove("cazdas")
+
+    gameLoop()
+
+
+})
+
+function gameLoop() {
     function drawDifferent(res, c) {
         for (var i = 0; i < res; i++) {
             var eachBox = new Peace(
@@ -95,9 +96,18 @@ window.addEventListener("load", () => {
             eachBox.drawElement();
         }
     }
-    var colors = ["#7149C6", "#FC2947", "#FE6244", "#245953", "#408E91", "#EA5455", "#002B5B"]
+    var colors = ["#caf0f8", "#ade8f4", "#90e0ef", "#48cae4", "#00b4d8", "#0077b6", "#023e8a","#03045e"]
     colors.map((each) => {
-        drawDifferent(2, each)
+        drawDifferent(3, each)
     })
+
+    document.querySelectorAll(".choosed").map((each)=>each.remove())
+
+
+
+}
+
+window.addEventListener("load", () => {
+   gameLoop()
 
 })
